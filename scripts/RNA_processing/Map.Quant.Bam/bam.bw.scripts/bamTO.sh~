@@ -1,0 +1,39 @@
+## generate scripts to convert RNAseq bam-files to bed and bw
+
+cd /projects/bmc-scc/user/medpvb/backup/projects/ChimpHuman/SeqRound1/Aligned_hg38_STAR_unique
+
+for bamfile in *bam
+
+do echo $bamfile
+
+newname=$(echo $bamfile | sed 's/Aligned.sortedByCoord.out.bam//g')
+
+echo "#!/bin/bash
+#SBATCH -p lu
+#SBATCH -A lu2016-2-7
+#SBATCH -n 12
+#SBATCH -N 1
+#SBATCH -t 01:00:00
+#SBATCH -J bamTOu_$bamfile
+#SBATCH -o bamTOu_$bamfile.out
+#SBATCH -e bamTOu_$bamfile.err
+
+
+# Generate bed, bg and bw from sorted.bam 
+
+module load foss/2016b
+module load ucsc-tools/3.4.3
+module load BEDTools/2.26.0
+
+cd /projects/bmc-scc/user/medpvb/backup/projects/ChimpHuman/SeqRound1/Aligned_hg38_STAR_unique
+
+genomeCoverageBed -bg -split -ibam $bamfile -g /lunarc/nobackup/projects/bmc-genome/scc/indicies/star/human/hg38 > $newname.bed
+
+sortBed -i $newname.bed > tmp.unq.$newname.txt
+mv tmp.unq.$newname.txt $newname.bed
+
+bedGraphToBigWig $newname.bed /lunarc/nobackup/projects/bmc-genome/scc/genomes/human/hg38/hg38_chrom_sizes.txt $newname.bw 
+" > /projects/bmc-scc/user/medpvb/backup/projects/ChimpHuman/SeqRound1/scripts/bam.bw.scripts/bamTO_bed.bw_$bamfile.sh
+
+done
+

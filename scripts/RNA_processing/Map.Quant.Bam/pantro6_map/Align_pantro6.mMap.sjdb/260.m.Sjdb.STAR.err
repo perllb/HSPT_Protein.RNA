@@ -1,0 +1,16 @@
+
+Inactive Modules:
+  1) FFTW/3.3.4                                       6) cURL/7.47.0
+  2) OpenBLAS/0.2.15-LAPACK-3.6.0                     7) git/2.8.0
+  3) OpenMPI/1.10.2                                   8) hwloc/1.11.2
+  4) Perl/5.22.1-bare                                 9) libxml2/2.9.3
+  5) ScaLAPACK/2.0.2-OpenBLAS-0.2.15-LAPACK-3.6.0    10) numactl/2.0.11
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) binutils/2.25     3) gettext/0.19.7     5) zlib/1.2.8
+  2) expat/2.1.0       4) ncurses/6.0
+
+The following have been reloaded with a version change:
+  1) GCC/4.9.3-2.25 => GCC/4.9.3-binutils-2.25
+
+slurmstepd: error: Exceeded step memory limit at some point.
